@@ -7,7 +7,7 @@ const GRAVITY = 1000
 @export var max_horizontal_speed : int = 300
 @export var slow_down_speed : int = 2000
 
-@export var jump : int = -300
+@export var jump : int = -500
 @export var jump_horizontal_speed : int = 1000
 @export var max_jump_horizontal_speed : int = 300
 
