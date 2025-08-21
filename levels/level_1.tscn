@@ -22,6 +22,12 @@ tile_map_data = PackedByteArray("AAASAP//DAADAAcAAAAVAP//DAADAAcAAAANAP//DAABAAc
 [node name="Player" parent="." index="4"]
 position = Vector2(24, -45)
 
+[node name="Camera2D" parent="Player" index="2"]
+limit_top = -608
+limit_right = 3088
+limit_bottom = 320
+editor_draw_limits = true
+
 [node name="EnemyPossie" parent="." index="5" node_paths=PackedStringArray("patrol_points") instance=ExtResource("3_bt44k")]
 position = Vector2(1312, 232)
 patrol_points = NodePath("PatrolPoints")
