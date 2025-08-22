@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w88d8xffkx80"
-path="res://.godot/imported/climb-preview.png-50df0f7aa94ded9fb0f740649cb24f86.ctex"
+uid="uid://bwpb8h28a2xqq"
+path="res://.godot/imported/fireball.png-f109eb8f295624a99e68f935ba61fcf0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/climb-preview.png"
-dest_files=["res://.godot/imported/climb-preview.png-50df0f7aa94ded9fb0f740649cb24f86.ctex"]
+source_file="res://player/fireball.png"
+dest_files=["res://.godot/imported/fireball.png-f109eb8f295624a99e68f935ba61fcf0.ctex"]
 
 [params]
 

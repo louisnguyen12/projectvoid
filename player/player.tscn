@@ -1,13 +1,13 @@
 [gd_scene load_steps=44 format=3 uid="uid://ctk1i73jxu2ec"]
 
 [ext_resource type="Script" uid="uid://gsl1ayshd2ci" path="res://player/player.gd" id="1_g1dw6"]
-[ext_resource type="Texture2D" uid="uid://dgfe0cv2oflcn" path="res://player/idle-preview.png" id="1_rkbax"]
-[ext_resource type="Texture2D" uid="uid://puqbxtnshm6c" path="res://player/run-preview.png" id="2_g1dw6"]
-[ext_resource type="Texture2D" uid="uid://w88d8xffkx80" path="res://player/climb-preview.png" id="2_rgyib"]
-[ext_resource type="Texture2D" uid="uid://dpmwf3siobnd8" path="res://player/hurt-preview.png" id="3_hg6s5"]
-[ext_resource type="Texture2D" uid="uid://baengliofsoxx" path="res://player/jump-preview.png" id="3_yw30f"]
-[ext_resource type="Texture2D" uid="uid://bmrirk730qqs5" path="res://player/run-shoot-preview.png" id="5_g6k8r"]
-[ext_resource type="Texture2D" uid="uid://byaf4nbbg5uca" path="res://player/shot-preview.png" id="5_qjkh3"]
+[ext_resource type="Texture2D" uid="uid://dgfe0cv2oflcn" path="res://player/idle.png" id="1_rkbax"]
+[ext_resource type="Texture2D" uid="uid://puqbxtnshm6c" path="res://player/run.png" id="2_g1dw6"]
+[ext_resource type="Texture2D" uid="uid://w88d8xffkx80" path="res://player/climb.png" id="2_rgyib"]
+[ext_resource type="Texture2D" uid="uid://dpmwf3siobnd8" path="res://player/hurt.png" id="3_hg6s5"]
+[ext_resource type="Texture2D" uid="uid://baengliofsoxx" path="res://player/jump.png" id="3_yw30f"]
+[ext_resource type="Texture2D" uid="uid://bmrirk730qqs5" path="res://player/run-shoot.png" id="5_g6k8r"]
+[ext_resource type="Texture2D" uid="uid://byaf4nbbg5uca" path="res://player/shot.png" id="5_qjkh3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2uvqg"]
 atlas = ExtResource("2_rgyib")
@@ -253,7 +253,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b8hi5")
 }],
-"loop": true,
+"loop": false,
 "name": &"run-shoot",
 "speed": 9.0
 }, {
@@ -273,7 +273,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_knn7v")
 }],
-"loop": true,
+"loop": false,
 "name": &"shoot",
 "speed": 9.0
 }]
@@ -288,11 +288,12 @@ script = ExtResource("1_g1dw6")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -22.5)
 sprite_frames = SubResource("SpriteFrames_32hag")
-animation = &"jump"
+animation = &"shoot"
 autoplay = "idle"
-frame = 4
-frame_progress = 0.494052
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_tqiix")
+
+[node name="SpitFire" type="Marker2D" parent="."]
+position = Vector2(18, -15)

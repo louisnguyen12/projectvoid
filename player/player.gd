@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
+var fireball = preload("res://player/fireball.tscn")
+
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var spit_fire: Marker2D = $SpitFire
+
 
 const GRAVITY = 1000
 @export var speed : int = 1000
@@ -11,14 +15,16 @@ const GRAVITY = 1000
 @export var jump_horizontal_speed : int = 1000
 @export var max_jump_horizontal_speed : int = 300
 
-enum State { Idle, Run, Jump }
+enum State { Idle, Run, Jump, Shoot, RunShoot }
 
 var current_state : State
+var fire_position
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_state = State.Idle
-
+	fire_position = spit_fire.position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -26,6 +32,9 @@ func _physics_process(delta: float) -> void:
 	player_idle(delta)
 	player_run(delta)
 	player_jump(delta)
+	player_fire_position()
+	player_shooting(delta)
+	
 	move_and_slide()
 	
 	player_animation()
@@ -62,14 +71,44 @@ func player_jump(delta: float):
 		var direction = input_movement()
 		velocity.x += direction * jump_horizontal_speed * delta
 		velocity.x = clamp(velocity.x, -max_jump_horizontal_speed, max_jump_horizontal_speed)
+		
+
+func player_shooting(delta : float):
+	var direction = input_movement()
+	
+	if direction != 0 and Input.is_action_just_pressed("shoot"):
+		var fire_instance = fireball.instantiate() as Node2D
+		fire_instance.direction = direction
+		fire_instance.global_position = spit_fire.global_position
+		get_parent().add_child(fire_instance)
+		current_state = State.RunShoot
+	elif direction == 0 and Input.is_action_just_pressed("shoot"):
+		var fire_instance = fireball.instantiate() as Node2D
+		fire_instance.direction = direction
+		fire_instance.global_position = spit_fire.global_position
+		get_parent().add_child(fire_instance)
+		current_state = State.Shoot
+		
+func player_fire_position():
+	var direction = input_movement()
+	
+	if direction > 0:
+		spit_fire.position.x = fire_position.x
+	elif direction < 0:
+		spit_fire.position.x = -fire_position.x
 
 func player_animation():
-	if current_state == State.Idle:
+	if current_state == State.Idle and animated_sprite_2d.animation != "shoot":
 		animated_sprite_2d.play("idle")
-	elif current_state == State.Run:
+	elif current_state == State.Run and animated_sprite_2d.animation != "run-shoot":
 		animated_sprite_2d.play("run")
 	elif current_state == State.Jump:
 		animated_sprite_2d.play("jump")
+	elif current_state == State.Shoot:
+		animated_sprite_2d.play("shoot")
+	elif current_state == State.RunShoot:
+		animated_sprite_2d.play("run-shoot")
+	
 
 func input_movement():
 	var direction : float = Input.get_axis("move_left", "move_right")

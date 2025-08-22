@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://baengliofsoxx"
-path="res://.godot/imported/jump-preview.png-05f26b705af38b82b194bdaf30d2ec63.ctex"
+uid="uid://w88d8xffkx80"
+path="res://.godot/imported/climb.png-b0f7280858cb018d0ced4c1f849b7267.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/jump-preview.png"
-dest_files=["res://.godot/imported/jump-preview.png-05f26b705af38b82b194bdaf30d2ec63.ctex"]
+source_file="res://player/climb.png"
+dest_files=["res://.godot/imported/climb.png-b0f7280858cb018d0ced4c1f849b7267.ctex"]
 
 [params]
 
