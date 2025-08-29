@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://bamxmghih6ff6"]
+
+[ext_resource type="Texture2D" uid="uid://dh7t35jqglslt" path="res://player/fireball-hit.png" id="1_toc38"]
+[ext_resource type="Script" uid="uid://dffyu1q254io8" path="res://player/fireball_impact_effect.gd" id="2_t1j1y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yd76g"]
+atlas = ExtResource("1_toc38")
+region = Rect2(0, 0, 29, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oe5u7"]
+atlas = ExtResource("1_toc38")
+region = Rect2(29, 0, 29, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ayfh"]
+atlas = ExtResource("1_toc38")
+region = Rect2(58, 0, 29, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xkgqg"]
+atlas = ExtResource("1_toc38")
+region = Rect2(87, 0, 29, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6k4y"]
+atlas = ExtResource("1_toc38")
+region = Rect2(116, 0, 29, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kp47y"]
+atlas = ExtResource("1_toc38")
+region = Rect2(145, 0, 29, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mx0j"]
+atlas = ExtResource("1_toc38")
+region = Rect2(174, 0, 29, 27)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n2g5h"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yd76g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oe5u7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ayfh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xkgqg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6k4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kp47y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mx0j")
+}],
+"loop": false,
+"name": &"fireball-hit",
+"speed": 11.0
+}]
+
+[node name="FireballImpactEffect" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_n2g5h")
+animation = &"fireball-hit"
+autoplay = "fireball-hit"
+frame = 6
+frame_progress = 1.0
+script = ExtResource("2_t1j1y")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

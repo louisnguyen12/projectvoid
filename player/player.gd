@@ -33,12 +33,13 @@ func _physics_process(delta: float) -> void:
 	player_run(delta)
 	player_jump(delta)
 	player_fire_position()
-	player_shooting(delta)
+	player_shooting()
+	player_run_shooting(delta)
 	
 	move_and_slide()
 	
 	player_animation()
-	print("State: ", State.keys()[current_state])
+	#print("State: ", State.keys()[current_state])
 	
 func player_falling(delta: float):
 	if !is_on_floor():
@@ -73,7 +74,7 @@ func player_jump(delta: float):
 		velocity.x = clamp(velocity.x, -max_jump_horizontal_speed, max_jump_horizontal_speed)
 		
 
-func player_shooting(delta : float):
+func player_run_shooting(delta : float):
 	var direction = input_movement()
 	
 	if direction != 0 and Input.is_action_just_pressed("shoot"):
@@ -82,13 +83,22 @@ func player_shooting(delta : float):
 		fire_instance.global_position = spit_fire.global_position
 		get_parent().add_child(fire_instance)
 		current_state = State.RunShoot
-	elif direction == 0 and Input.is_action_just_pressed("shoot"):
-		var fire_instance = fireball.instantiate() as Node2D
-		fire_instance.direction = direction
+
+func player_shooting():
+	#Set the default facing direction
+	var facing_left : bool = false
+	var facing_direction = Vector2.RIGHT
+	var fire_instance = fireball.instantiate() as Node2D
+	
+	if Input.is_action_just_pressed("shoot"):
+		fire_instance.direction = facing_direction.length()
 		fire_instance.global_position = spit_fire.global_position
 		get_parent().add_child(fire_instance)
+		if facing_left:
+			fire_instance.x *= -1
+			facing_direction = Vector2.LEFT
+			print("Shooting LEFT")
 		current_state = State.Shoot
-		
 func player_fire_position():
 	var direction = input_movement()
 	
@@ -112,4 +122,5 @@ func player_animation():
 
 func input_movement():
 	var direction : float = Input.get_axis("move_left", "move_right")
+	
 	return direction

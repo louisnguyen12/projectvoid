@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://nk0cyveg5k37"]
+[gd_scene load_steps=10 format=3 uid="uid://nk0cyveg5k37"]
 
 [ext_resource type="Texture2D" uid="uid://bwpb8h28a2xqq" path="res://player/fireball.png" id="1_pev22"]
 [ext_resource type="Script" uid="uid://cccmq5rcgyscu" path="res://player/fireball.gd" id="2_841cc"]
@@ -51,15 +51,31 @@ animations = [{
 "speed": 11.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_841cc"]
+radius = 8.0
+height = 22.0
+
 [node name="Fireball" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_q1o1c")
 animation = &"shoot"
-frame_progress = 0.881537
+autoplay = "shoot"
+frame = 3
+frame_progress = 0.153959
 script = ExtResource("2_841cc")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 3.0
 one_shot = true
 autostart = true
 
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_841cc")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

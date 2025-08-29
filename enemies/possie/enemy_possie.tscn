@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ckd3kynsuxc5s"]
+[gd_scene load_steps=16 format=3 uid="uid://ckd3kynsuxc5s"]
 
 [ext_resource type="Texture2D" uid="uid://dy8jyfkfankrv" path="res://enemies/possie/idle_preview.png" id="1_bn0b7"]
 [ext_resource type="Script" uid="uid://cxof0ol5341kc" path="res://enemies/possie/enemy_possie.gd" id="1_wtmdg"]
@@ -86,7 +86,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bn0b7"]
-size = Vector2(24, 18)
+size = Vector2(22, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtmdg"]
+size = Vector2(30, 20)
 
 [node name="EnemyPossie" type="CharacterBody2D"]
 script = ExtResource("1_wtmdg")
@@ -98,12 +101,21 @@ animation = &"walk"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_bn0b7")
-debug_color = Color(0.690196, 0.337255, 0.572549, 0.376471)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
 
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_wtmdg")
+debug_color = Color(0.879576, 0.257115, 0.564789, 0.42)
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
