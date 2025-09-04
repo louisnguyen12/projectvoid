@@ -2,12 +2,13 @@ extends AnimatedSprite2D
 
 const FIREBALL_IMPACT_EFFECT = preload("res://player/FireballImpactEffect.tscn")
 
-var speed : int = 350
+var speed : int = 500
 var direction : int
 
 @onready var fireball: AnimatedSprite2D = $"."
 # Called when the node enters the scene tree for the first time.
 func _physics_process(delta: float) -> void:
+	print(direction)
 	move_local_x(direction * speed * delta)
 	fireball_animation()
 	

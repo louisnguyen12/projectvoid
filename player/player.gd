@@ -19,7 +19,7 @@ enum State { Idle, Run, Jump, Shoot, RunShoot }
 
 var current_state : State
 var fire_position
-
+var facing_left : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	player_animation()
-	#print("State: ", State.keys()[current_state])
+	print("State: ", State.keys()[current_state])
 	
 func player_falling(delta: float):
 	if !is_on_floor():
@@ -86,26 +86,35 @@ func player_run_shooting(delta : float):
 
 func player_shooting():
 	#Set the default facing direction
-	var facing_left : bool = false
-	var facing_direction = Vector2.RIGHT
-	var fire_instance = fireball.instantiate() as Node2D
+	var direction = Vector2.RIGHT
 	
-	if Input.is_action_just_pressed("shoot"):
-		fire_instance.direction = facing_direction.length()
-		fire_instance.global_position = spit_fire.global_position
-		get_parent().add_child(fire_instance)
-		if facing_left:
-			fire_instance.x *= -1
-			facing_direction = Vector2.LEFT
-			print("Shooting LEFT")
-		current_state = State.Shoot
+	if facing_left == true:
+		direction = Vector2.LEFT
+		if velocity.x == 0 and Input.is_action_just_pressed("shoot"):
+			var fire_instance = fireball.instantiate() as Node2D
+			fire_instance.direction = direction.x
+			fire_instance.global_position = spit_fire.global_position
+			get_parent().add_child(fire_instance)
+			current_state = State.Shoot
+	else:
+		if velocity.x == 0 and Input.is_action_just_pressed("shoot"):
+			var fire_instance = fireball.instantiate() as Node2D
+			fire_instance.direction = direction.x
+			fire_instance.global_position = spit_fire.global_position
+			get_parent().add_child(fire_instance)
+			current_state = State.Shoot
+
 func player_fire_position():
 	var direction = input_movement()
-	
+	# If the character is facing right, facing_left takes default value : false
 	if direction > 0:
 		spit_fire.position.x = fire_position.x
+		facing_left = false
+	# If the character is facing left, facing_left takes new value : true
 	elif direction < 0:
 		spit_fire.position.x = -fire_position.x
+		facing_left = true
+
 
 func player_animation():
 	if current_state == State.Idle and animated_sprite_2d.animation != "shoot":
